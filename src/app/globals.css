@@ -1,0 +1,317 @@
+@import url('https://fonts.googleapis.com/css2?family=Shojumaru&family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;700&family=Inter:wght@300;400;600;700;900&display=swap');
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────
+   CHAMPLOO DESIGN TOKENS
+   ───────────────────────────────────────── */
+:root {
+  /* Color Palette */
+  --sunflower:   #F5C518;
+  --sunflower-dim: #C9A014;
+  --ink:         #0A0A0A;
+  --ink-mid:     #111111;
+  --ink-light:   #1A1A1A;
+  --steel:       #7A8B8B;
+  --steel-light: #A8BCBC;
+  --spray-red:   #E8272A;
+  --spray-red-dim:#B01F22;
+  --cream:       #F0EAD6;
+  --cream-dim:   #D4C9A8;
+
+  /* Typography */
+  --font-display: 'Shojumaru', serif;
+  --font-heading: 'Bebas Neue', sans-serif;
+  --font-mono:    'IBM Plex Mono', monospace;
+  --font-body:    'Inter', sans-serif;
+
+  /* Z-index scale */
+  --z-base: 0;
+  --z-overlay: 10;
+  --z-modal: 100;
+  --z-supreme: 9999;
+}
+
+/* ─────────────────────────────────────────
+   BASE RESET
+   ───────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--sunflower); border-radius: 2px; }
+
+/* ─────────────────────────────────────────
+   CUSTOM CURSOR
+   ───────────────────────────────────────── */
+.cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 12px; height: 12px;
+  background: var(--sunflower);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: var(--z-supreme);
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease, width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: difference;
+}
+
+.cursor-trail {
+  position: fixed;
+  top: 0; left: 0;
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--sunflower);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: calc(var(--z-supreme) - 1);
+  transform: translate(-50%, -50%);
+  transition: transform 0.35s ease, opacity 0.35s;
+  opacity: 0.5;
+}
+
+/* ─────────────────────────────────────────
+   NOISE / GRAIN TEXTURE OVERLAY
+   ───────────────────────────────────────── */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-overlay);
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  animation: grain 0.5s steps(2) infinite;
+}
+
+@keyframes grain {
+  0% { background-position: 0 0; }
+  25% { background-position: -64px 32px; }
+  50% { background-position: 32px -64px; }
+  75% { background-position: -32px 64px; }
+  100% { background-position: 64px -32px; }
+}
+
+/* ─────────────────────────────────────────
+   HALFTONE PATTERN
+   ───────────────────────────────────────── */
+.halftone-bg {
+  background-image: radial-gradient(circle, var(--sunflower) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.06;
+}
+
+/* ─────────────────────────────────────────
+   TYPOGRAPHY UTILITIES
+   ───────────────────────────────────────── */
+.font-display  { font-family: var(--font-display); }
+.font-heading  { font-family: var(--font-heading); }
+.font-mono     { font-family: var(--font-mono); }
+
+.text-sunflower   { color: var(--sunflower); }
+.text-steel       { color: var(--steel); }
+.text-spray       { color: var(--spray-red); }
+.text-cream       { color: var(--cream); }
+.text-ink         { color: var(--ink); }
+
+/* Graffiti glitch text */
+.glitch {
+  position: relative;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0.8;
+}
+.glitch::before {
+  color: var(--spray-red);
+  clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+  transform: translate(-3px, 0);
+  animation: glitch-1 3s infinite;
+}
+.glitch::after {
+  color: #00FFFF;
+  clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+  transform: translate(3px, 0);
+  animation: glitch-2 3s infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .font-display { font-size: 85%; }
+}
+@keyframes glitch-1 {
+  0%,90%,100% { transform: translate(-3px, 0); clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%); }
+  92% { transform: translate(3px, 0); clip-path: polygon(0 25%, 100% 25%, 100% 45%, 0 45%); }
+  95% { transform: translate(-3px, 0); clip-path: polygon(0 15%, 100% 15%, 100% 35%, 0 35%); }
+}
+@keyframes glitch-2 {
+  0%,90%,100% { transform: translate(3px, 0); clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%); }
+  93% { transform: translate(-3px, 0); clip-path: polygon(0 65%, 100% 65%, 100% 85%, 0 85%); }
+  96% { transform: translate(3px, 0); clip-path: polygon(0 55%, 100% 55%, 100% 75%, 0 75%); }
+}
+
+/* ─────────────────────────────────────────
+   KATANA SLASH DIVIDER
+   ───────────────────────────────────────── */
+.slash-divider {
+  position: relative;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--sunflower), transparent);
+  overflow: visible;
+}
+.slash-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  width: 80px; height: 1px;
+  background: var(--spray-red);
+  box-shadow: 0 0 8px var(--spray-red);
+}
+
+/* ─────────────────────────────────────────
+   MANGA PANEL
+   ───────────────────────────────────────── */
+.manga-panel {
+  position: relative;
+  border: 2px solid var(--ink-light);
+  background: var(--ink-mid);
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .manga-panel {
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  }
+}
+.manga-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(245,197,24,0.04) 40%);
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────
+   SPRAY BUTTON
+   ───────────────────────────────────────── */
+.btn-spray {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background: var(--sunflower);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  letter-spacing: 0.1em;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  transition: background 0.2s, transform 0.15s;
+  cursor: none;
+}
+@media (max-width: 768px) {
+  .btn-spray { cursor: auto; }
+}
+.btn-spray:hover {
+  background: var(--spray-red);
+  color: var(--cream);
+  transform: translate(-2px, -2px);
+}
+.btn-spray:active { transform: translate(0, 0); }
+
+/* ─────────────────────────────────────────
+   SECTION & LAYOUT
+   ───────────────────────────────────────── */
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .section-container {
+    padding: 0 1rem;
+  }
+}
+
+/* ─────────────────────────────────────────
+   VINYL SPIN
+   ───────────────────────────────────────── */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.vinyl-spin { animation: spin-slow 6s linear infinite; }
+
+/* ─────────────────────────────────────────
+   SUNFLOWER PARTICLE
+   ───────────────────────────────────────── */
+@keyframes float-up {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+  100% { transform: translateY(-120vh) rotate(720deg); opacity: 0; }
+}
+
+/* ─────────────────────────────────────────
+   DRIP EFFECT for Nav
+   ───────────────────────────────────────── */
+@keyframes drip {
+  0% { clip-path: polygon(0 0, 100% 0, 100% 0%, 0 0%); }
+  100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+}
+
+/* ─────────────────────────────────────────
+   SCAN LINES (VHS effect)
+   ───────────────────────────────────────── */
+.scanlines {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.15) 2px,
+    rgba(0,0,0,0.15) 4px
+  );
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────
+   LOADING SCREEN
+   ───────────────────────────────────────── */
+.loading-bar {
+  height: 2px;
+  background: linear-gradient(90deg, var(--spray-red), var(--sunflower));
+  box-shadow: 0 0 12px var(--sunflower);
+  animation: load-progress 2.5s ease-in-out forwards;
+}
+@keyframes load-progress {
+  0% { width: 0%; }
+  60% { width: 70%; }
+  100% { width: 100%; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  body { cursor: auto; }
+  .cursor, .cursor-trail { display: none; }
+}
