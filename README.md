@@ -4,14 +4,13 @@ A high-fidelity, interactive portfolio website themed after the legendary anime 
 
 ## 📸 Preview
 
-![Samurai Champloo Portfolio Preview](./public/preview.png)
+![Samurai Champloo Portfolio Preview]()
 
 ---
 
 ## ✨ Features
 
 - **Dynamic Hero Section**: A cinematic entrance featuring stylized silhouettes and iconic imagery.
-- **Manga-Style Panels**: Interactive sections designed to feel like moving through a manga volume.
 - **Lo-Fi Aesthetic**: Custom cursors, film grain textures, and a sun-faded parchment color palette.
 - **Background Music Player**: Fully integrated audio player featuring curated lo-fi tracks.
 - **Fully Responsive**: Optimized for every device, from mobile scrolls to desktop blades.
