@@ -4,7 +4,7 @@ A high-fidelity, interactive portfolio website themed after the legendary anime 
 
 ## 📸 Preview
 
-![Samurai Champloo Portfolio Preview]()
+![Samurai Champloo Portfolio Preview](./public/preview.gif)
 
 ---
 
